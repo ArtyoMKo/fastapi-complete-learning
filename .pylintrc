@@ -1,4 +1,5 @@
 [MASTER]
+ignore = fastapiv
 ignore-patterns=(.)*_test\.py,test_(.)*\.py
 disable=missing-module-docstring, missing-class-docstring, missing-function-docstring, too-few-public-methods, wrong-import-position
 
