@@ -5,3 +5,4 @@ pytest==7.2.1
 pydantic==2.1.1
 fastapi~=0.100.1
 sqlalchemy~=2.0
+httpx~=0.24
