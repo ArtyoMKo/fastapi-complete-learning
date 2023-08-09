@@ -19,6 +19,10 @@ If you have cloned this repository and created a virtual environment for it. You
 ``` bash
 pip3 install -r requirements.txt
 ```
+Or you can activate already created virtual environment by
+``` bash
+source fastapiv/bin/activate
+```
 
 ***
 # Usage
