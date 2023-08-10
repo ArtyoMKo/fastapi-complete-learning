@@ -25,6 +25,7 @@ class TodoRequest(BaseModel):
     description: str = Field(min_length=3, max_length=330)
     priority: int = Field(gt=0, lt=7)
     complete: bool = Field(default=False)
+    owner_id: int = Field(gt=0)
 
 
 class TodoUpdate(BaseModel):
@@ -32,6 +33,7 @@ class TodoUpdate(BaseModel):
     description: Optional[str] = None
     priority: Optional[int] = None
     complete: Optional[bool] = None
+    owner_id: Optional[int] = None
 
 
 @router.get("/")
