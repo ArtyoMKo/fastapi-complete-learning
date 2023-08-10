@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker
 # from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import declarative_base
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./todo.db"
+SQLALCHEMY_DATABASE_URL = "sqlite:///./todosapp.db"
 
 # By default, sqlalchemy engine using 1 thread. With this parameter we are saying `do not
 # check same thread because fastapi could use multiple threads
