@@ -5,7 +5,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from todo_app.database import Base
-from todo_app.main import app, get_db
+from todo_app.routers.todos import get_db
+from todo_app.main import app
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///"
 
