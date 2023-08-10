@@ -8,3 +8,4 @@ sqlalchemy~=2.0
 httpx~=0.24
 passlib[bcrypt]==1.7.4
 types-passlib~=1.7.7
+python-multipart==0.0.6

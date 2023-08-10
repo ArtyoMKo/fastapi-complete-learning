@@ -9,3 +9,9 @@ from starlette.exceptions import HTTPException
 class TODONotFoundException(HTTPException):
     status_code: int = 404
     detail: str = "Todo not found"
+
+
+@dataclass
+class AuthenticationFailed(HTTPException):
+    status_code: int = 401
+    detail: str = "Authentication Failed"
