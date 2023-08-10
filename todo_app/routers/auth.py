@@ -57,10 +57,11 @@ def create_user(database: DbDependency, create_user_request: CreateUserRequest):
 
 @router.post("/token")
 async def login_for_access_token(
-        form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-        database: DbDependency
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()], database: DbDependency
 ):
-    user_authenticated: bool = authenticate_user(form_data.username, form_data.password, database)
+    user_authenticated: bool = authenticate_user(
+        form_data.username, form_data.password, database
+    )
     if not user_authenticated:
         raise AuthenticationFailed
-    return 'Successful Authentication'
+    return "Successful Authentication"
