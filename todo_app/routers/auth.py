@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 from dotenv import load_dotenv
 from jose import jwt, JWTError
 from todo_app.models import Users
-from todo_app.database import SessionLocal
+from todo_app.database import get_db
 from todo_app.exceptions import AuthenticationFailed
 
 load_dotenv()
@@ -34,14 +34,6 @@ class Token(BaseModel):
     token_type: str
 
 
-def get_db():
-    database = SessionLocal()
-    try:
-        yield database
-    finally:
-        database.close()
-
-
 DbDependency = Annotated[Session, Depends(get_db)]
 
 
@@ -52,11 +44,18 @@ def authenticate_user(username: str, password: str, database):
     return False
 
 
-def create_access_token(username: str, user_id: int, expires_delta: timedelta):
+def create_access_token(
+    username: str, user_id: int, role: str, expires_delta: timedelta
+):
     secret_key = os.environ["JWT_SECRET_KEY"]
     algorithm = os.environ["JWT_ALGORITHM"]
 
-    encode = {"sub": username, "id": user_id, "exp": datetime.utcnow() + expires_delta}
+    encode = {
+        "sub": username,
+        "id": user_id,
+        "role": role,
+        "exp": datetime.utcnow() + expires_delta,
+    }
     return jwt.encode(encode, secret_key, algorithm)
 
 
@@ -71,7 +70,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
             raise AuthenticationFailed
         return {"username": username, "id": user_id}
     except JWTError:
-        raise AuthenticationFailed
+        raise AuthenticationFailed  # pylint: disable=raise-missing-from
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
@@ -97,5 +96,7 @@ async def login_for_access_token(
     user = authenticate_user(form_data.username, form_data.password, database)
     if not user:
         raise AuthenticationFailed
-    token = create_access_token(user.username, user.id, timedelta(minutes=30))
+    token = create_access_token(
+        user.username, user.id, user.role, timedelta(minutes=30)
+    )
     return {"access_token": token, "token_type": "bearer"}
