@@ -3,20 +3,11 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel, Field
 from fastapi import APIRouter, Depends, status, Path
 from todo_app.models import Todos
-from todo_app.database import SessionLocal
+from todo_app.database import get_db
 from todo_app.exceptions import TODONotFoundException
 from todo_app.routers.auth import get_current_user
 
 router = APIRouter(prefix="/todo", tags=["todo"])
-
-
-def get_db():
-    database = SessionLocal()
-    try:
-        yield database
-    finally:
-        database.close()
-
 
 DbDependency = Annotated[Session, Depends(get_db)]
 UserDependency = Annotated[dict, Depends(get_current_user)]

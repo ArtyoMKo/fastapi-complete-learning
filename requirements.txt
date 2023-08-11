@@ -11,3 +11,4 @@ types-passlib~=1.7.7
 python-multipart==0.0.6
 python-jose[cryptography]~=3.3
 types-python-jose
+python-dotenv~=1.0
