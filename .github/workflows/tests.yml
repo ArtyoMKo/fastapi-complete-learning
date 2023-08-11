@@ -6,8 +6,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      JWT_SECRET_KEY: test
-      JWT_REFRESH_SECRET_KEY: test
+      JWT_ALGORITHM: HS256
+      JWT_SECRET_KEY: 0791114245a6bae1e13772990c8885f134b85ad288399610561173781d489d92
     strategy:
       matrix:
         python-version: ["3.9"]
