@@ -16,3 +16,9 @@ class TODONotFoundException(HTTPException):
 class AuthenticationFailed(HTTPException):
     status_code: int = HTTP_401_UNAUTHORIZED
     detail: str = "Authentication Failed"
+
+
+@dataclass
+class UserNotFoundException(HTTPException):
+    status_code: int = HTTP_404_NOT_FOUND
+    detail: str = "User not found"

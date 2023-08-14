@@ -14,6 +14,11 @@ class Users(Base):
     is_active = Column(Boolean, default=True)
     role = Column(String)
 
+    def update(self, **kwargs):
+        for field, value in kwargs.items():
+            if value is not None:
+                setattr(self, field, value)
+
 
 class Todos(Base):
     __tablename__ = (
