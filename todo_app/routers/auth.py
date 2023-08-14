@@ -66,9 +66,10 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
         payload = jwt.decode(token, secret_key, algorithm)
         username: str = payload.get("sub")  # type: ignore
         user_id: int = payload.get("id")  # type: ignore
+        user_role: str = payload.get("role")  # type: ignore
         if username is None or user_id is None:
             raise AuthenticationFailed
-        return {"username": username, "id": user_id}
+        return {"username": username, "id": user_id, "user_role": user_role}
     except JWTError:
         raise AuthenticationFailed  # pylint: disable=raise-missing-from
 
