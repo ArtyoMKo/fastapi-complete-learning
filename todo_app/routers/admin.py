@@ -6,10 +6,7 @@ from todo_app.database import get_db
 from todo_app.exceptions import TODONotFoundException, AuthenticationFailed
 from todo_app.routers.auth import get_current_user
 
-router = APIRouter(
-    prefix="/admin",
-    tags=["admin"]
-)
+router = APIRouter(prefix="/admin", tags=["admin"])
 
 DbDependency = Annotated[Session, Depends(get_db)]
 UserDependency = Annotated[dict, Depends(get_current_user)]
@@ -30,7 +27,9 @@ async def read_all_users(user: UserDependency, database: DbDependency):
 
 
 @router.delete("/todo/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_todo(user: UserDependency, database: DbDependency, todo_id: int = Path(gt=0)):
+async def delete_todo(
+    user: UserDependency, database: DbDependency, todo_id: int = Path(gt=0)
+):
     if user is None or user.get("user_role") != "admin":
         raise AuthenticationFailed
     todo = database.query(Todos).filter(Todos.id == todo_id).first()
